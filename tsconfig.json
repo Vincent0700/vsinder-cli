@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -14,8 +14,9 @@
     "alwaysStrict": true,
     "sourceMap": true,
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "typeRoots": []
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./node_modules"]
 }

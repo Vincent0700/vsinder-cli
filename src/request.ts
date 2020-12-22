@@ -1,5 +1,6 @@
 import axios from 'axios';
-import * as storage from 'node-persist';
+import storage from 'node-persist';
+import { authenticate } from './auth';
 
 const request = axios.create({
   baseURL: 'https://api.vsinder.com',
@@ -9,32 +10,27 @@ const request = axios.create({
 });
 
 request.interceptors.request.use(async (config: any) => {
-  await storage.init({
-    dir: './cache',
-    parse: JSON.parse,
-    encoding: 'utf8',
-    logging: false,
-    expiredInterval: 86400000,
-    forgiveParseErrors: true
-  });
-  await storage.set('accessToken', '123');
-  await storage.set('refreshToken', '456');
   const accessToken = await storage.get('accessToken');
   const refreshToken = await storage.get('refreshToken');
-  console.log(accessToken, refreshToken);
-  config.headers['accessToken'] = accessToken;
-  config.headers['refreshToken'] = refreshToken;
+  if (accessToken && refreshToken) {
+    config.headers['access-token'] = accessToken;
+    config.headers['refresh-token'] = refreshToken;
+  }
   return config;
 });
 
 request.interceptors.response.use(
   (response) => {
-    return Promise.resolve(response);
+    return Promise.resolve(response.data);
   },
-  (error) => {
-    // if (error.response.status === 401) {
-    // }
-    return Promise.reject(error.response);
+  async (error) => {
+    if (error.response.status === 401) {
+      const { accessToken, refreshToken } = await authenticate();
+      await storage.set('accessToken', accessToken);
+      await storage.set('refreshToken', refreshToken);
+      return request(error.response.config);
+    }
+    throw error;
   }
 );
 

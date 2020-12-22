@@ -1,7 +1,16 @@
 import open from 'open';
 import express from 'express';
 
-function authenticate(): Promise<{}> {
+export interface AuthData {
+  accessToken: string;
+  refreshToken: string;
+}
+
+/**
+ * Github login
+ * @returns {Promise<AuthData>}
+ */
+export function authenticate(): Promise<AuthData> {
   return new Promise((resolve) => {
     const app = express();
     const server = app.listen(54321, () => {
@@ -18,5 +27,3 @@ function authenticate(): Promise<{}> {
     open('https://api.vsinder.com/auth/github');
   });
 }
-
-export default authenticate;
