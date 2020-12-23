@@ -14,7 +14,7 @@ export function authenticate(): Promise<AuthData> {
   return new Promise((resolve) => {
     const app = express();
     const server = app.listen(54321, () => {
-      console.log('[VSINDER] Waiting for Github authentication.');
+      console.log('Waiting for Github authentication.');
     });
     app.get('/callback/:accessToken/:refreshToken', (req, res) => {
       const { accessToken, refreshToken } = req.params;
@@ -22,7 +22,7 @@ export function authenticate(): Promise<AuthData> {
       req.destroy();
       server.close();
       resolve({ accessToken, refreshToken });
-      console.log('[VSINDER] Login successfully.');
+      console.log('Login successfully.');
     });
     open('https://api.vsinder.com/auth/github');
   });

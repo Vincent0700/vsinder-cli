@@ -1,6 +1,6 @@
 {
   "name": "vsinder-cli",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "author": "vincent0700 (https://vincentstudio.info)",
   "email": "wang.yuanqiu007@gmail.com",
   "description": "A commandline tool for vsinder.",
@@ -19,8 +19,8 @@
     "type": "git"
   },
   "scripts": {
-    "build": "rimraf dist && rimraf bin && tsc && webpack && chmod +x bin/index.js",
-    "lint": "eslint --fix ./src/**/*.ts && prettier --write ./**/*.{md,json}"
+    "lint": "eslint --fix ./src/**/*.ts && prettier --write ./**/*.{md,json}",
+    "build": "rimraf dist && rimraf bin && tsc && webpack && chmod +x bin/index.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
