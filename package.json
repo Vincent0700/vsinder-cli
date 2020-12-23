@@ -6,13 +6,13 @@
   "description": "A commandline tool for vsinder.",
   "license": "MIT",
   "keywords": [],
-  "main": "./dist/src/index.js",
+  "main": "./dist/index.js",
   "bin": {
-    "vsinder": "./dist/src/index.js"
+    "vsinder": "./bin/index.js"
   },
   "scripts": {
-    "build": "tsc",
-    "lint": "eslint --fix ./src/**/*.js && prettier --write ./**/*.{md,html,json,css,scss,less}"
+    "build": "rimraf dist && rimraf bin && tsc && webpack && chmod +x bin/index.js",
+    "lint": "eslint --fix ./src/**/*.ts && prettier --write ./**/*.{md,json}"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
@@ -32,8 +32,11 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0"
   },
   "dependencies": {
     "axios": "^0.21.1",

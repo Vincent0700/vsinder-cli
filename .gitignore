@@ -2,7 +2,8 @@
 
 node_modules/
 dist/
-.cache/
+bin/
+cache/
 
 *.log
 
