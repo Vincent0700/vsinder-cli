@@ -6,12 +6,13 @@
 [![npm](https://img.shields.io/npm/v/vsinder-cli.svg)](https://www.npmjs.com/package/vsinder-cli)
 [![npm](https://img.shields.io/npm/dm/vsinder-cli.svg)](https://www.npmjs.com/package/vsinder-cli)
 
-A CommandLine Tool for Vsinder.
+A CommandLine Tool for VSINDER.
 
 ## Development
 
 - [x] github authentication
 - [x] show unread messages
+- [x] cancel inactive matches
 - [ ] show user info
 - [ ] show chat history
 - [ ] send message
@@ -29,19 +30,26 @@ $ npm install -g vsinder-cli
 
 ## Usage
 
-### Show unread messages
+### ▩ Show unread messages
 
 ```text
 $ vsinder unread
+Found 2 unread messages.
 ┌──────────────────────────────┬─────────────────────────────────────────────┬──────────────────┐
-│ NAME                         │ MESSAGE                                     │ TIME             │
+│ NAME                         │ LATEST MESSAGE                              │ TIME             │
 ├──────────────────────────────┼─────────────────────────────────────────────┼──────────────────┤
-│ Benjineer                    │ What are you working on at the moment?      │ a few seconds    │
+│ Romjan D. Hossain            │ You?                                        │ 37 minutes       │
 ├──────────────────────────────┼─────────────────────────────────────────────┼──────────────────┤
-│ Fish                         │ [new match]                                 │ 41 minutes       │
-├──────────────────────────────┼─────────────────────────────────────────────┼──────────────────┤
-│ Sara Nikolic                 │ [new match]                                 │ 41 minutes       │
-├──────────────────────────────┼─────────────────────────────────────────────┼──────────────────┤
-│ Ryan                         │ [new match]                                 │ an hour          │
+│ Naomi                        │ Hello there                                 │ 2 hours          │
 └──────────────────────────────┴─────────────────────────────────────────────┴──────────────────┘
+```
+
+### ▩ Cancel inactive matches
+
+Delete matches that have never been communicated over 12 hours.
+
+```text
+$ vsinder unmatches
+[=============================================] 100%
+Successfully cancel 45 inactive matches.
 ```

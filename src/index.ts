@@ -1,17 +1,19 @@
 import storage from 'node-persist';
 import program from 'commander';
 import moment from 'moment';
+import inquirer from 'inquirer';
 import Table from 'cli-table';
-import { getMatchUsers } from './api';
+import ProgressBar from 'progress';
+import { getMatchUsers, unmatchUser } from './api';
 import * as pkg from '../package.json';
 import chalk from 'chalk';
 
 program.version(pkg.version);
 program.description(pkg.description);
 
-// [command] match
+// [command] matches
 program
-  .command('match')
+  .command('matches')
   .description('show all matches')
   .action(async () => {
     const result = await getMatchUsers();
@@ -31,7 +33,7 @@ program
       .sort((a, b) => b.message.createdAt - a.message.createdAt);
     const count = unread.length;
     console.log(chalk.yellowBright(`Found ${count} unread messages.`));
-    if (count <= 0) return;
+    if (!count) return;
     const table = new Table({
       colWidths: [30, 45, 18],
       colAligns: ['left', 'left', 'left']
@@ -41,6 +43,30 @@ program
       table.push([t.name, t.message.text, moment(t.message.createdAt).toNow(true)]);
     });
     console.log(table.toString());
+  });
+
+// [command] unmatches
+program
+  .command('unmatches')
+  .description('cancel inactive matches')
+  .action(async () => {
+    const { matches } = await getMatchUsers();
+    const list = matches.filter((t) => +new Date() - t.createdAt > 43200000 && !t.message);
+    const total = list.length;
+    if (!total) {
+      console.log(chalk.yellowBright(`No inactive matches.`));
+      return;
+    }
+    const bar = new ProgressBar('[:bar] :percent', { total: total });
+    const promises = list.map((t) =>
+      unmatchUser(t.userId).then((data: any) => {
+        if (data && data.ok) bar.tick();
+        if (bar.complete) {
+          console.log(chalk.yellowBright(`Successfully cancel ${total} inactive matches.`));
+        }
+      })
+    );
+    await Promise.all(promises);
   });
 
 // parse args

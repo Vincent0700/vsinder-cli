@@ -1,3 +1,5 @@
+type Gender = 'female' | 'male' | 'non-binary';
+
 export interface MatchItem {
   matchId: string;
   userId: string;
@@ -7,4 +9,20 @@ export interface MatchItem {
   read: boolean;
   createdAt: number;
   message: any;
+}
+
+export interface User {
+  id: number;
+  displayName: string;
+  bio: boolean;
+  flair: string;
+  numLikes: number;
+  photoUrl: string;
+  codeImgIds: string[];
+  hasPushToken: boolean;
+  location: string;
+  global: boolean;
+  gender: Gender;
+  genderToShow: Gender;
+  // gendersToShow: T in Gender;
 }

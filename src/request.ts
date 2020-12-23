@@ -1,4 +1,5 @@
 import axios from 'axios';
+import chalk from 'chalk';
 import storage from 'node-persist';
 import { authenticate } from './auth';
 
@@ -24,11 +25,15 @@ request.interceptors.response.use(
     return Promise.resolve(response.data);
   },
   async (error) => {
-    if (error.response.status === 401) {
+    const res = error.response;
+    if (res.status === 401) {
       const { accessToken, refreshToken } = await authenticate();
       await storage.set('accessToken', accessToken);
       await storage.set('refreshToken', refreshToken);
-      return request(error.response.config);
+      return request(res.config);
+    } else {
+      console.log(chalk.bgRedBright.black(` ERROR `), chalk.redBright(res.data));
+      process.exit(1);
     }
     throw error;
   }
