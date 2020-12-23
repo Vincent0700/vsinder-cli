@@ -27,7 +27,7 @@ program
         return t2 - t1;
       });
     const table = new Table({
-      colWidths: [32, 50, 20],
+      colWidths: [30, 45, 18],
       colAligns: ['left', 'left', 'left']
     });
     table.push(['NAME', 'MESSAGE', 'TIME'].map((s) => chalk.cyanBright(s)));
