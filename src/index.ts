@@ -4,20 +4,40 @@ import moment from 'moment';
 import inquirer from 'inquirer';
 import Table from 'cli-table';
 import ProgressBar from 'progress';
-import { getMatchUsers, unmatchUser } from './api';
+import { getMe, getMatches, unmatchUser } from './api';
 import * as pkg from '../package.json';
 import chalk from 'chalk';
 
 program.version(pkg.version);
 program.description(pkg.description);
 
+// [command] me
+program
+  .command('me')
+  .description('show my profile')
+  .action(async () => {
+    const me = await getMe();
+    const table = new Table({
+      colWidths: [16, 64],
+      colAligns: ['left', 'left']
+    });
+    const age = Math.floor((Date.now() - new Date(me.birthday).getTime()) / 31536000000);
+    table.push([chalk.cyanBright('NAME'), me.displayName]);
+    table.push([chalk.cyanBright('AGE'), age]);
+    table.push([chalk.cyanBright('BIO'), me.bio]);
+    table.push([chalk.cyanBright('FLAIR'), me.flair]);
+    table.push([chalk.cyanBright('GOAL'), me.goal]);
+    table.push([chalk.cyanBright('LIKES'), me.numLikes + ' likes']);
+    console.log(table.toString());
+  });
+
 // [command] matches
 program
   .command('matches')
   .description('show all matches')
   .action(async () => {
-    const result = await getMatchUsers();
-    const count = result.matches.length;
+    const result = await getMatches();
+    const count = result.length;
     console.log(chalk.yellowBright(`Found ${count} matches.`));
   });
 
@@ -26,8 +46,8 @@ program
   .command('unread')
   .description('show unread messages')
   .action(async () => {
-    const result = await getMatchUsers();
-    const unread = result.matches
+    const result = await getMatches();
+    const unread = result
       .filter((t) => !t.read && t.message)
       .map((t) => ({ name: t.displayName, message: t.message }))
       .sort((a, b) => b.message.createdAt - a.message.createdAt);
@@ -50,7 +70,7 @@ program
   .command('unmatches')
   .description('cancel inactive matches')
   .action(async () => {
-    const { matches } = await getMatchUsers();
+    const matches = await getMatches();
     const list = matches.filter((t) => +new Date() - t.createdAt > 43200000 && !t.message);
     const total = list.length;
     if (!total) {

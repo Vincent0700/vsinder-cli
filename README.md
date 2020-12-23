@@ -12,10 +12,11 @@ A CommandLine Tool for VSINDER.
 
 - [x] github authentication
 - [x] show unread messages
-- [x] cancel inactive matches
+- [x] show profile
 - [ ] show user info
 - [ ] show chat history
 - [ ] send message
+- [x] cancel inactive matches
 - [ ] swiping
 - [ ] edit profile
 - [ ] edit code
@@ -29,6 +30,25 @@ $ npm install -g vsinder-cli
 ```
 
 ## Usage
+
+### ▩ Show my profile
+
+```text
+$ vsinder me
+┌────────────────┬────────────────────────────────────────────────────────────────┐
+│ NAME           │ Vincent0700                                                    │
+├────────────────┼────────────────────────────────────────────────────────────────┤
+│ AGE            │ 26                                                             │
+├────────────────┼────────────────────────────────────────────────────────────────┤
+│ BIO            │ https://github.com/vincent0700                                 │
+├────────────────┼────────────────────────────────────────────────────────────────┤
+│ FLAIR          │ javascript                                                     │
+├────────────────┼────────────────────────────────────────────────────────────────┤
+│ GOAL           │ friendship                                                     │
+├────────────────┼────────────────────────────────────────────────────────────────┤
+│ LIKES          │ 352 likes                                                      │
+└────────────────┴────────────────────────────────────────────────────────────────┘
+```
 
 ### ▩ Show unread messages
 

@@ -24,5 +24,10 @@ export interface User {
   global: boolean;
   gender: Gender;
   genderToShow: Gender;
-  // gendersToShow: T in Gender;
+  gendersToShow: Gender[];
+  goal: 'friendship' | 'love';
+  ageRangeMax: number;
+  ageRangeMin: number;
+  birthday: string;
+  unreadMatchUserIds: { userId1: string }[];
 }

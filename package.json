@@ -1,6 +1,6 @@
 {
   "name": "vsinder-cli",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "vincent0700 (https://vincentstudio.info)",
   "email": "wang.yuanqiu007@gmail.com",
   "description": "A CommandLine Tool for VSINDER.",
