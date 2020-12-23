@@ -6,7 +6,7 @@
 [![npm](https://img.shields.io/npm/v/vsinder-cli.svg)](https://www.npmjs.com/package/vsinder-cli)
 [![npm](https://img.shields.io/npm/dm/vsinder-cli.svg)](https://www.npmjs.com/package/vsinder-cli)
 
-A CommandLine Tool for VSINDER.
+A CommandLine Tool for [VSINDER](https://github.com/benawad/vsinder).
 
 ## Development
 
