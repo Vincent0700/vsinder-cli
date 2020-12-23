@@ -10,7 +10,7 @@
     "vsinder-cli",
     "cli"
   ],
-  "main": "./dist/index.js",
+  "main": "./bin/index.js",
   "bin": {
     "vsinder": "./bin/index.js"
   },
@@ -27,8 +27,10 @@
     "@commitlint/config-conventional": "^11.0.0",
     "@types/axios": "^0.14.0",
     "@types/chalk": "^2.2.0",
+    "@types/cli-table": "^0.3.0",
     "@types/commander": "^2.12.2",
     "@types/express": "^4.17.9",
+    "@types/moment": "^2.13.0",
     "@types/node": "^13.13.25",
     "@types/node-persist": "^3.1.0",
     "@types/open": "^6.2.1",
@@ -49,8 +51,10 @@
   "dependencies": {
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
+    "cli-table": "^0.3.4",
     "commander": "^6.2.1",
     "express": "^4.17.1",
+    "moment": "^2.29.1",
     "node-persist": "^3.1.0",
     "open": "^7.3.0"
   }
