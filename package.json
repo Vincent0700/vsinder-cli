@@ -5,10 +5,18 @@
   "email": "wang.yuanqiu007@gmail.com",
   "description": "A commandline tool for vsinder.",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "vsinder",
+    "vsinder-cli",
+    "cli"
+  ],
   "main": "./dist/index.js",
   "bin": {
     "vsinder": "./bin/index.js"
+  },
+  "repository": {
+    "url": "git@github.com:Vincent0700/vsinder-cli.git",
+    "type": "git"
   },
   "scripts": {
     "build": "rimraf dist && rimraf bin && tsc && webpack && chmod +x bin/index.js",
