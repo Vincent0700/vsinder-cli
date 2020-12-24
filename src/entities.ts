@@ -11,7 +11,17 @@ export interface MatchItem {
   message: any;
 }
 
-export interface User {
+export interface FeedItem {
+  id: string;
+  displayName: string;
+  flair: string;
+  age: number;
+  bio: string;
+  photoUrl: string;
+  codeImgIds: string[];
+}
+
+export interface UserItem {
   id: number;
   displayName: string;
   bio: boolean;

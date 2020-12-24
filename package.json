@@ -1,6 +1,6 @@
 {
   "name": "vsinder-cli",
-  "version": "0.1.7",
+  "version": "0.1.10",
   "author": "vincent0700 (https://vincentstudio.info)",
   "email": "wang.yuanqiu007@gmail.com",
   "description": "A CommandLine Tool for VSINDER.",
@@ -19,6 +19,7 @@
     "type": "git"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "lint": "eslint --fix ./src/**/*.ts && prettier --write ./**/*.{md,json}",
     "build": "rimraf dist && rimraf bin && tsc && webpack && chmod +x bin/index.js"
   },

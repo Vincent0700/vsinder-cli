@@ -4,7 +4,8 @@ import moment from 'moment';
 import inquirer from 'inquirer';
 import Table from 'cli-table';
 import ProgressBar from 'progress';
-import { getMe, getMatches, unmatchUser } from './api';
+import { getMe, getMatches, getFeed, unmatch, match } from './api';
+import { MatchItem } from './entities';
 import * as pkg from '../package.json';
 import chalk from 'chalk';
 
@@ -65,13 +66,62 @@ program
     console.log(table.toString());
   });
 
+// [command] swiping
+program
+  .command('swiping')
+  .description('start swiping')
+  .action(async () => {
+    let alwaysLike = false;
+    while (true) {
+      console.log(chalk.yellowBright('Searching ...'));
+      const list = await getFeed();
+      for (const p of list) {
+        console.clear();
+        console.log(
+          chalk.magentaBright(p.displayName),
+          chalk.cyanBright(p.age),
+          chalk.white((p.flair ? '#' : '') + p.flair)
+        );
+        console.log(chalk.yellowBright(p.bio));
+        console.log();
+
+        let isLike = false;
+        if (!alwaysLike) {
+          const result = await inquirer.prompt({
+            type: 'list',
+            name: 'isLike',
+            message: 'Like or not?',
+            choices: [
+              { name: chalk.redBright('LIKE'), value: 1 },
+              { name: chalk.greenBright('DISLIKE'), value: 0 },
+              { name: 'ALWAYS LIKE', value: 2 }
+            ]
+          });
+          if (result.isLike === 0) isLike = false;
+          else if (result.isLike === 1) isLike = true;
+          else if (result.isLike === 2) alwaysLike = true;
+        }
+        const result = await match(p.id, alwaysLike || isLike);
+        if (result.ok) {
+          console.log(chalk.green('Success!' + (result.match ? ' Matched!' : '')));
+          await new Promise((resolve) => {
+            setTimeout(() => resolve(null), 1000);
+          });
+        }
+      }
+    }
+  });
+
 // [command] unmatches
 program
   .command('unmatches')
   .description('cancel inactive matches')
   .action(async () => {
     const matches = await getMatches();
-    const list = matches.filter((t) => +new Date() - t.createdAt > 43200000 && !t.message);
+    const list = matches.filter((t: MatchItem) => {
+      const lastTime = t.message ? t.message.createdAt : t.createdAt;
+      return +new Date() - lastTime > 5 * 86400000;
+    });
     const total = list.length;
     if (!total) {
       console.log(chalk.yellowBright(`No inactive matches.`));
@@ -79,7 +129,7 @@ program
     }
     const bar = new ProgressBar('[:bar] :percent', { total: total });
     const promises = list.map((t) =>
-      unmatchUser(t.userId).then((data: any) => {
+      unmatch(t.userId).then((data: any) => {
         if (data && data.ok) bar.tick();
         if (bar.complete) {
           console.log(chalk.yellowBright(`Successfully cancel ${total} inactive matches.`));

@@ -17,7 +17,7 @@ A CommandLine Tool for [VSINDER](https://github.com/benawad/vsinder).
 - [ ] show chat history
 - [ ] send message
 - [x] cancel inactive matches
-- [ ] swiping
+- [x] swiping
 - [ ] edit profile
 - [ ] edit code
 - [ ] auto reply
@@ -64,9 +64,21 @@ Found 2 unread messages.
 └──────────────────────────────┴─────────────────────────────────────────────┴──────────────────┘
 ```
 
+### ▩ Swiping
+
+```text
+$ vsinder swiping
+Allen Wang 27 #java
+Wanna be a real coder.
+
+? Like or not? (Use arrow keys)
+❯ LIKE
+  DISLIKE
+```
+
 ### ▩ Cancel inactive matches
 
-Delete matches that have never been communicated over 12 hours.
+Delete matches that have never been communicated over 5 days.
 
 ```text
 $ vsinder unmatches
